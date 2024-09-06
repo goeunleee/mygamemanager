@@ -30,24 +30,30 @@ function convertToHTML(input: string) {
 }
 
 async function HomePage() {
-	console.log("STEAM_API_URL:", process.env.STEAM_API_URL); // 환경 변수 출력
+	// NEXT_PUBLIC_ 접두사를 사용하여 환경 변수 접근
+	const apiUrl = process.env.NEXT_PUBLIC_STEAM_API_URL;
 
-	// 환경 변수가 제대로 설정되었는지 확인합니다.
-	const apiUrl = process.env.STEAM_API_URL;
+	console.log("확인 NEXT_PUBLIC_STEAM_API_URL:", apiUrl);
 
-	// if (!apiUrl) {
-	// 	throw new Error("STEAM_API_URL 환경 변수가 설정되지 않았습니다.");
-	// }
+	if (!apiUrl) {
+		throw new Error("NEXT_PUBLIC_STEAM_API_URL 환경 변수가 설정되지 않았습니다.");
+	}
 
-	const response = await fetch(apiUrl! ?? "https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=440&count=5", {
-		cache: "no-store", // 서버에서만 호출
+	const response = await fetch(apiUrl, {
+		cache: "no-store",
 	});
 
+	console.log("응답 상태:", response.status);
+
 	if (!response.ok) {
-		throw new Error("데이터를 패치 실패");
+		const errorData = await response.text();
+		console.error("데이터 패칭 실패, 상태 코드:", response.status, "응답 내용:", errorData);
+		throw new Error("데이터 패칭 실패");
 	}
 
 	const data = await response.json();
+	console.log("받은 데이터:", data);
+
 	const news: NewsItem[] = data.appnews.newsitems;
 
 	return (
