@@ -1,23 +1,10 @@
-// src/app/page.tsx
-import { NewsItem } from "@/components/type/type";
-import React from "react";
-import { convertToHTML } from "@/utils/htmlConverter";
+// src/app/page.tsx (서버 컴포넌트)
 import { fetchSteamNews } from "@/api/getSteamApi";
-// async function fetchNews() {
-// 	const res = await fetch("https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=440&count=10", {
-// 		cache: "no-store",
-// 	});
+import SteamNewsList from "@/components/NewsItem";
 
-// 	if (!res.ok) {
-// 		throw new Error("Failed to fetch news");
-// 	}
-
-// 	const data = await res.json();
-// 	return data.appnews.newsitems;
-// }
-
-const HomePage = async () => {
-	const news: NewsItem[] = await fetchSteamNews();
+export default async function HomePage() {
+	const news = await fetchSteamNews();
+	// console.log("Fetched News:", news);
 	if (!news || news.length === 0) {
 		return <p>No news available</p>;
 	}
@@ -25,19 +12,7 @@ const HomePage = async () => {
 	return (
 		<div>
 			<h2>Steam News</h2>
-			<ul>
-				{news.map((item) => (
-					<li key={item.gid} className="newsItem">
-						<h4>{item.title}</h4>
-						<p dangerouslySetInnerHTML={{ __html: convertToHTML(item.contents) }}></p>
-						<a href={item.url} target="_blank" rel="noopener noreferrer">
-							더 읽기
-						</a>
-					</li>
-				))}
-			</ul>
+			<SteamNewsList news={news} />
 		</div>
 	);
-};
-
-export default HomePage;
+}

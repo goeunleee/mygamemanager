@@ -31,8 +31,11 @@ body {
 }
 
 a {
-	color: rgb(56, 174, 233);
+	color: rgb(42, 109, 196);
 	text-decoration: none;
+}
+.readMore {
+	color: rgb(88, 180, 233);
 }
 
 ul {
