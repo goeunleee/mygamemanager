@@ -1,5 +1,4 @@
-// src/app/page.tsx (서버 컴포넌트)
-import { fetchSteamNews } from "@/api/getSteamApi";
+import { fetchMyGames, fetchSteamNews } from "@/api/getSteamApi";
 import SteamNewsList from "@/components/NewsItem";
 
 export default async function HomePage() {
@@ -9,6 +8,9 @@ export default async function HomePage() {
 		return <p>No news available</p>;
 	}
 
+	const myGame = await fetchMyGames();
+	// 서버 콘솔에 로그 출력
+	console.log("Fetched Games:", myGame); // 이 로그는 서버 터미널에 출력됩니다
 	return (
 		<div>
 			<h2>Steam News</h2>

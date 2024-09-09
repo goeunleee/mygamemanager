@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-"use client"; // 클라이언트 컴포넌트 선언
+"use client";
 
 import React, { useState } from "react";
 import { NewsItem } from "@/components/type/type";
@@ -20,10 +20,10 @@ export default function SteamNewsList({ news }: SteamNewsListProps) {
 }
 
 function NewsItemComponent({ item }: { item: NewsItem }) {
-	const [isExpanded, setIsExpanded] = useState(false); // 클릭 여부 상태 관리
+	const [isExpanded, setIsExpanded] = useState(false);
 
 	const handleToggle = () => {
-		setIsExpanded(!isExpanded); // 클릭 시 상태 토글
+		setIsExpanded(!isExpanded);
 	};
 	const IMG_REPLACEMENTS = {
 		"{STEAM_CLAN_IMAGE}": "https://clan.akamai.steamstatic.com/images/",
@@ -52,17 +52,17 @@ function NewsItemComponent({ item }: { item: NewsItem }) {
 		<li className="newsItem" onClick={handleToggle}>
 			<h4 style={{ cursor: "pointer" }}>{item.title}</h4>
 
-			{/* isExpanded가 false일 때 이미지가 있으면 보여줌 */}
+			{/* 접혀있을때 */}
 			{!isExpanded && finalImageUrl && (
 				<p>
 					<a href={item.url} target="_blank" rel="noopener noreferrer">
 						<img src={finalImageUrl} alt="Steam News" width="100" height="100" />
 					</a>
-					<p>더 읽기</p>
+					<div>더 읽기</div>
 				</p>
 			)}
 
-			{/* isExpanded가 true일 때 전체 내용을 보여줌 */}
+			{/* 펴졌을때 */}
 			{isExpanded && (
 				<>
 					<p dangerouslySetInnerHTML={{ __html: convertToHTML(item.contents) }}></p>
