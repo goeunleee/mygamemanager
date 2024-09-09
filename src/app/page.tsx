@@ -2,21 +2,25 @@
 import { NewsItem } from "@/components/type/type";
 import React from "react";
 import { convertToHTML } from "@/utils/htmlConverter";
-async function fetchNews() {
-	const res = await fetch("https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=440&count=10", {
-		cache: "no-store",
-	});
+import { fetchSteamNews } from "@/api/getSteamApi";
+// async function fetchNews() {
+// 	const res = await fetch("https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=440&count=10", {
+// 		cache: "no-store",
+// 	});
 
-	if (!res.ok) {
-		throw new Error("Failed to fetch news");
-	}
+// 	if (!res.ok) {
+// 		throw new Error("Failed to fetch news");
+// 	}
 
-	const data = await res.json();
-	return data.appnews.newsitems;
-}
+// 	const data = await res.json();
+// 	return data.appnews.newsitems;
+// }
 
 const HomePage = async () => {
-	const news: NewsItem[] = await fetchNews();
+	const news: NewsItem[] = await fetchSteamNews();
+	if (!news || news.length === 0) {
+		return <p>No news available</p>;
+	}
 
 	return (
 		<div>
