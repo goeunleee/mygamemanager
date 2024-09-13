@@ -1,4 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 export function convertToHTML(input: string): string {
 	const imageBaseUrl = "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/clans/";
 
@@ -8,7 +9,7 @@ export function convertToHTML(input: string): string {
 		.replace(/\[img\](.*?)\[\/img\]/g, '<img src="$1" alt="Image" width="300" height="300">') // 이미지 크기 설정
 		.replace(/\[b\](.*?)\[\/b\]/g, "<strong>$1</strong>")
 		.replace(/\[url=(.*?)\](.*?)\[\/url\]/g, '<a href="$1" target="_blank">$2</a>')
-		.replace(/\[list\](.*?)\[\/list\]/gs, (match: any, p1: string) => {
+		.replace(/\[list\](.*?)\[\/list\]/gs, (match: unknown, p1: string) => {
 			return "<ul>" + p1.replace(/\[\*\](.*?)(?=\[\*|\<\/ul>)/g, "<li>$1</li>") + "</ul>";
 		});
 
