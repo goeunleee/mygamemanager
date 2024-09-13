@@ -12,7 +12,7 @@ export async function fetchSteamNews() {
 	});
 
 	if (!res.ok) {
-		throw new Error("fetch news data fail");
+		throw new Error("news Api 요청실패");
 	}
 
 	const data = await res.json();
@@ -28,7 +28,7 @@ export async function fetchMyGames() {
 		const res = await fetch(url);
 
 		if (!res.ok) {
-			throw new Error(`API 요청 실패: code ${res.status}`);
+			throw new Error(`Mygame API url을 가져올 수 없습니다: code ${res.status}`);
 		}
 
 		const data = await res.json();
